@@ -9,12 +9,12 @@ import SwiftUI
 
 struct TaskListCellView: View {
     var task: Task
-    var action: () -> Void
+    var action: (Task) -> Void
     
     var body: some View {
         HStack {
             Button {
-                action()
+                action(task)
             } label: {
                 Image(systemName: task.isCompleted ? "circle.inset.filled" : "circle")
                     .renderingMode(.original)
@@ -38,7 +38,7 @@ struct TaskListCellView: View {
 }
 
 #Preview {
-    TaskListCellView(task: Task()) {
-        print("Action")
+    TaskListCellView(task: Task()) { task in
+        task.isCompleted.toggle()
     }
 }

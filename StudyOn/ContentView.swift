@@ -19,7 +19,7 @@ struct ContentView: View {
                     NavigationLink {
                         Text(task.title)
                     } label: {
-                        Text(task.title)
+                        TaskListCellView(task: task, action: taskCompleted)
                     }
                 }
                 .onDelete(perform: deleteItems)
@@ -53,6 +53,11 @@ struct ContentView: View {
                 modelContext.delete(tasks[index])
             }
         }
+    }
+    
+    private func taskCompleted(_ task: Task) {
+        guard let index = tasks.firstIndex(where: { $0.id == task.id }) else { return }
+        tasks[index].isCompleted.toggle()
     }
 }
 
