@@ -1,5 +1,5 @@
 //
-//  ContentView.swift
+//  TaskListView.swift
 //  StudyOn
 //
 //  Created by Zhansen Zhalel on 26.09.2024.
@@ -8,7 +8,7 @@
 import SwiftUI
 import SwiftData
 
-struct ContentView: View {
+struct TaskListView: View {
     @Environment(\.modelContext) private var modelContext
     @Query(
         filter: #Predicate<Task> { !$0.isCompleted },
@@ -69,6 +69,6 @@ struct ContentView: View {
 }
 
 #Preview {
-    ContentView()
+    TaskListView()
         .modelContainer(for: Task.self, inMemory: true)
 }

@@ -25,7 +25,7 @@ struct StudyOnApp: App {
 
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            TaskListView()
         }
         .modelContainer(sharedModelContainer)
     }
