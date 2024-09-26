@@ -17,7 +17,7 @@ struct ContentView: View {
             List {
                 ForEach(tasks) { task in
                     NavigationLink {
-                        Text(task.title)
+                        TaskDetailView(task: task)
                     } label: {
                         TaskListCellView(task: task, action: taskCompleted)
                     }
