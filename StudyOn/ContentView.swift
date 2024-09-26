@@ -44,6 +44,7 @@ struct ContentView: View {
         withAnimation {
             let newItem = Task()
             modelContext.insert(newItem)
+            try? modelContext.save()
         }
     }
 
@@ -51,6 +52,7 @@ struct ContentView: View {
         withAnimation {
             for index in offsets {
                 modelContext.delete(tasks[index])
+                try? modelContext.save()
             }
         }
     }
@@ -58,6 +60,7 @@ struct ContentView: View {
     private func taskCompleted(_ task: Task) {
         guard let index = tasks.firstIndex(where: { $0.id == task.id }) else { return }
         tasks[index].isCompleted.toggle()
+        try? modelContext.save()
     }
 }
 
