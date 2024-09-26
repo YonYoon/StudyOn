@@ -10,7 +10,10 @@ import SwiftData
 
 struct ContentView: View {
     @Environment(\.modelContext) private var modelContext
-    @Query private var tasks: [Task]
+    @Query(
+        filter: #Predicate<Task> { !$0.isCompleted },
+        animation: .default
+    ) private var tasks: [Task]
 
     var body: some View {
         NavigationSplitView {
