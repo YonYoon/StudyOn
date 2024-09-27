@@ -2,62 +2,34 @@
 //  TaskListView.swift
 //  StudyOn
 //
-//  Created by Zhansen Zhalel on 26.09.2024.
+//  Created by Zhansen Zhalel on 27.09.2024.
 //
 
-import SwiftUI
 import SwiftData
+import SwiftUI
 
 struct TaskListView: View {
-    @Environment(\.modelContext) private var modelContext
-    @Query(
-        filter: #Predicate<Task> { !$0.isCompleted },
-        animation: .default
-    ) private var tasks: [Task]
-
+    @Environment(\.modelContext) var modelContext
+    @Query private var tasks: [Task]
+    
+    init(hideCompleted: Bool) {
+        if hideCompleted {
+            _tasks = Query(filter: #Predicate<Task> { !$0.isCompleted }, animation: .default)
+        } else {
+            _tasks = Query()
+        }
+    }
+    
     var body: some View {
-        NavigationSplitView {
-            List {
-                ForEach(tasks) { task in
-                    NavigationLink {
-                        TaskDetailView(task: task)
-                    } label: {
-                        TaskListCellView(task: task, action: taskCompleted)
-                    }
-                }
-                .onDelete(perform: deleteItems)
-            }
-            .navigationTitle("Tasks")
-            .listStyle(.plain)
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    EditButton()
-                }
-                ToolbarItem {
-                    Button(action: addItem) {
-                        Label("Add Task", systemImage: "plus")
-                    }
+        List {
+            ForEach(tasks) { task in
+                NavigationLink {
+                    TaskDetailView(task: task)
+                } label: {
+                    TaskListCellView(task: task, action: taskCompleted)
                 }
             }
-        } detail: {
-            Text("Select an item")
-        }
-    }
-
-    private func addItem() {
-        withAnimation {
-            let newItem = Task()
-            modelContext.insert(newItem)
-            try? modelContext.save()
-        }
-    }
-
-    private func deleteItems(offsets: IndexSet) {
-        withAnimation {
-            for index in offsets {
-                modelContext.delete(tasks[index])
-                try? modelContext.save()
-            }
+            .onDelete(perform: deleteItems)
         }
     }
     
@@ -66,9 +38,18 @@ struct TaskListView: View {
         tasks[index].isCompleted.toggle()
         try? modelContext.save()
     }
+    
+    private func deleteItems(offsets: IndexSet) {
+        withAnimation {
+            for index in offsets {
+                modelContext.delete(tasks[index])
+                try? modelContext.save()
+            }
+        }
+    }
 }
 
 #Preview {
-    TaskListView()
+    TaskListView(hideCompleted: false)
         .modelContainer(for: Task.self, inMemory: true)
 }
