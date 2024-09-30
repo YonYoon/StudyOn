@@ -25,7 +25,15 @@ struct StudyOnApp: App {
 
     var body: some Scene {
         WindowGroup {
-            TasksView()
+            TabView {
+                Tab("Tasks", systemImage: "list.bullet.circle.fill") {
+                    TasksView()
+                }
+                
+                Tab("Study", systemImage: "timer") {
+                    StudyView()
+                }
+            }
             .preferredColorScheme(.dark)
         }
         .modelContainer(sharedModelContainer)
