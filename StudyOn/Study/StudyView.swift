@@ -15,4 +15,5 @@ struct StudyView: View {
 
 #Preview {
     StudyView()
+        .preferredColorScheme(.dark)
 }

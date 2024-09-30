@@ -26,6 +26,7 @@ struct StudyOnApp: App {
     var body: some Scene {
         WindowGroup {
             TasksView()
+            .preferredColorScheme(.dark)
         }
         .modelContainer(sharedModelContainer)
     }

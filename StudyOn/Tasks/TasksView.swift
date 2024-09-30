@@ -53,4 +53,5 @@ struct TasksView: View {
 #Preview {
     TasksView()
         .modelContainer(for: Task.self, inMemory: true)
+        .preferredColorScheme(.dark)
 }
