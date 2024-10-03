@@ -15,11 +15,17 @@ struct StudyView: View {
     }
     
     @Query(filter: #Predicate<Task> { !$0.isCompleted }) private var tasks: [Task]
-    @State private var hour = 0
-    @State private var minute = 25
-    @State private var second = 0
+    @State private var focusHour = 0
+    @State private var focusMinute = 25
+    @State private var focusSecond = 0
+    
+    @State private var breakHour = 0
+    @State private var breakMinute = 5
+    @State private var breakSecond = 0
+    
     @State private var stage = Stage.focus
     @State private var selectedTask: Task? = nil
+    @State private var isSettingsShown = false
     
     var body: some View {
         NavigationStack {
@@ -31,35 +37,15 @@ struct StudyView: View {
                 .pickerStyle(.palette)
                 .padding()
                 
-                Form {
-                    Section("Timer") {
-                        HStack {
-                            Picker("Duration", selection: $hour) {
-                                ForEach(0..<24) { hour in
-                                    Text("\(hour)")
-                                }
-                            }
-                            .pickerStyle(.wheel)
-                            Text("hours")
-                            
-                            Picker("Duration", selection: $minute) {
-                                ForEach(0..<60) { hour in
-                                    Text("\(hour)")
-                                }
-                            }
-                            .pickerStyle(.wheel)
-                            Text("min")
-                            
-                            Picker("Duration", selection: $second) {
-                                ForEach(0..<60) { hour in
-                                    Text("\(hour)")
-                                }
-                            }
-                            .pickerStyle(.wheel)
-                            Text("sec")
-                        }
-                    }
-                    
+                // TODO: Implement working timer
+                HStack(alignment: .center) {
+                    Spacer()
+                    Text("25:00") // Placeholder time
+                        .font(.system(size: 75, weight: .bold, design: .monospaced))
+                    Spacer()
+                }
+                
+                Form { 
                     Section("Task") {
                         Picker("Choose a task", selection: $selectedTask) {
                             Text("No task").tag(Optional<Task>(nil))
@@ -71,7 +57,7 @@ struct StudyView: View {
                 }
                 
                 Button {
-                    // start timer
+                    // TODO: Implement starting timer
                 } label: {
                     Text("Start")
                         .frame(width: 50, height: 50)
@@ -83,6 +69,15 @@ struct StudyView: View {
                 .padding(.bottom, 50)
             }
             .navigationTitle("Study")
+            .toolbar {
+                Button("Settings", systemImage: "gear") {
+                    isSettingsShown = true
+                }
+                .tint(.green)
+            }
+            .sheet(isPresented: $isSettingsShown) {
+                StudySettingsView(focusHour: $focusHour, focusMinute: $focusMinute, focusSecond: $focusSecond, breakHour: $breakHour, breakMinute: $breakMinute, breakSecond: $breakSecond)
+            }
         }
         .scrollBounceBehavior(.basedOnSize)
     }
