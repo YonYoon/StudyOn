@@ -29,6 +29,7 @@ struct StudyView: View {
     @State private var stage = Stage.focus
     @State private var selectedTask: Task? = nil
     @State private var isSettingsShown = false
+    @State private var isSessionStarted = false
     
     @State private var timer = Timer.publish(every: 1, on: .main, in: .common)
     @State private var cancellable: Cancellable? = nil
@@ -37,44 +38,110 @@ struct StudyView: View {
     var body: some View {
         NavigationStack {
             VStack {
-                Picker("Stages", selection: $stage) {
-                    Text(Stage.focus.rawValue).tag(Stage.focus)
-                    Text(Stage.rest.rawValue).tag(Stage.rest)
-                }
-                .pickerStyle(.palette)
-                .padding()
-                
-                HStack(alignment: .center) {
-                    Spacer()
-                    Text(DateComponentsFormatter().string(from: totalFocusTime) ?? "Error")
-                        .onReceive(timer, perform: { _ in
-                            if totalFocusTime > 0 {
-                                totalFocusTime -= 1
-                            } else {
-                                cancellable?.cancel()
-                                // TODO: Set to user defined total focus time
-                                totalFocusTime = 25 * 60 // 25 minutes
+                if isSessionStarted {
+                    VStack {
+                        HStack(alignment: .center) {
+                            Spacer()
+                            Text(DateComponentsFormatter().string(from: totalFocusTime) ?? "Error")
+                                .onReceive(timer, perform: { _ in
+                                    if totalFocusTime > 0 {
+                                        totalFocusTime -= 1
+                                    } else {
+                                        cancellable?.cancel()
+                                        // TODO: Set to user defined total focus time
+                                        totalFocusTime = 25 * 60 // 25 minutes
+                                    }
+                                })
+                                .font(.system(size: 75, weight: .bold, design: .monospaced))
+                            Spacer()
+                        }
+                        
+                        if isTimerRunning {
+                            TimerButton(action: stopTimer, stage: .stop)
+                        } else {
+                            TimerButton(action: startTimer, stage: .start)
+                        }
+                    }
+                } else {
+                    Picker("Stages", selection: $stage) {
+                        Text(Stage.focus.rawValue).tag(Stage.focus)
+                        Text(Stage.rest.rawValue).tag(Stage.rest)
+                    }
+                    .pickerStyle(.palette)
+                    .padding()
+                    
+                    Form {
+                        if stage == .focus {
+                            Section("Timer") {
+                                HStack {
+                                    Picker("Duration", selection: $focusHour) {
+                                        ForEach(0..<24) { hour in
+                                            Text("\(hour)")
+                                        }
+                                    }
+                                    .pickerStyle(.wheel)
+                                    Text("hours")
+                                    
+                                    Picker("Duration", selection: $focusMinute) {
+                                        ForEach(0..<60) { hour in
+                                            Text("\(hour)")
+                                        }
+                                    }
+                                    .pickerStyle(.wheel)
+                                    Text("min")
+                                    
+                                    Picker("Duration", selection: $focusSecond) {
+                                        ForEach(0..<60) { hour in
+                                            Text("\(hour)")
+                                        }
+                                    }
+                                    .pickerStyle(.wheel)
+                                    Text("sec")
+                                }
                             }
-                        })
-                        .font(.system(size: 75, weight: .bold, design: .monospaced))
-                    Spacer()
-                }
-                
-                Form { 
-                    Section("Task") {
-                        Picker("Choose a task", selection: $selectedTask) {
-                            Text("No task").tag(Optional<Task>(nil))
-                            ForEach(tasks) { task in
-                                Text(task.title).tag(Optional(task))
+                            
+                            Section("Task") {
+                                Picker("Choose a task", selection: $selectedTask) {
+                                    Text("No task").tag(Optional<Task>(nil))
+                                    ForEach(tasks) { task in
+                                        Text(task.title).tag(Optional(task))
+                                    }
+                                }
+                            }
+                        } else {
+                            Section("Timer") {
+                                HStack {
+                                    Picker("Duration", selection: $breakHour) {
+                                        ForEach(0..<24) { hour in
+                                            Text("\(hour)")
+                                        }
+                                    }
+                                    .pickerStyle(.wheel)
+                                    Text("hours")
+                                    
+                                    Picker("Duration", selection: $breakMinute) {
+                                        ForEach(0..<60) { hour in
+                                            Text("\(hour)")
+                                        }
+                                    }
+                                    .pickerStyle(.wheel)
+                                    Text("min")
+                                    
+                                    Picker("Duration", selection: $breakSecond) {
+                                        ForEach(0..<60) { hour in
+                                            Text("\(hour)")
+                                        }
+                                    }
+                                    .pickerStyle(.wheel)
+                                    Text("sec")
+                                }
                             }
                         }
                     }
-                }
-                
-                if isTimerRunning {
-                    TimerButton(action: stopTimer, stage: .stop)
-                } else {
-                    TimerButton(action: startTimer, stage: .start)
+                    
+                    Button("Start session") {
+                        isSessionStarted = true
+                    }
                 }
             }
             .navigationTitle("Study")
@@ -107,7 +174,6 @@ struct StudyView: View {
 #Preview {
     StudyView()
         .modelContainer(for: Task.self, inMemory: true)
-        .modelContainer(for: Session.self, inMemory: true)
         .preferredColorScheme(.dark)
 }
 
