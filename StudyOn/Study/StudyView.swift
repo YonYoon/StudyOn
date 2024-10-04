@@ -65,15 +65,21 @@ struct StudyView: View {
                     isSessionStarted = true
                 }
                 .fullScreenCover(isPresented: $isSessionStarted) {
-                    let hourInSeconds: Int = focusHour * 3600
-                    let minutesInSeconds: Int = focusMinute * 60
-
-                    SessionView(totalFocusTime: TimeInterval((hourInSeconds + minutesInSeconds + focusSecond)))
+                    SessionView(totalFocusTime: calculateTotalSessionTime())
                 }
             }
             .navigationTitle("Study")
         }
         .scrollBounceBehavior(.basedOnSize)
+    }
+    
+    private func calculateTotalSessionTime() -> TimeInterval {
+        switch stage {
+        case .focus:
+            return TimeInterval(focusHour * 3600 + focusMinute * 60 + focusSecond)
+        case .rest:
+            return TimeInterval(breakHour * 3600 + breakMinute * 60 + breakSecond)
+        }
     }
 }
 
