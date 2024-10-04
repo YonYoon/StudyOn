@@ -9,6 +9,7 @@ import Combine
 import SwiftUI
 
 struct SessionView: View {
+    @Environment(\.dismiss) var dismiss
     @State var totalFocusTime: TimeInterval
     @State private var timer = Timer.publish(every: 1, on: .main, in: .common)
     @State private var cancellable: Cancellable? = nil
@@ -32,10 +33,18 @@ struct SessionView: View {
                 Spacer()
             }
             
-            if isTimerRunning {
-                TimerButton(action: stopTimer, stage: .stop)
-            } else {
-                TimerButton(action: startTimer, stage: .start)
+            HStack {
+                Button("Finish Session") {
+                    isTimerRunning = false
+                    dismiss()
+                    // TODO: Save session in memory
+                }
+                
+                if isTimerRunning {
+                    TimerButton(action: stopTimer, stage: .stop)
+                } else {
+                    TimerButton(action: startTimer, stage: .start)
+                }
             }
         }
     }
