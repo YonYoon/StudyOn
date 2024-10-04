@@ -72,33 +72,9 @@ struct StudyView: View {
                 }
                 
                 if isTimerRunning {
-                    Button {
-                        cancellable?.cancel()
-                        isTimerRunning = false
-                    } label: {
-                        Text("Stop")
-                            .frame(width: 50, height: 50)
-                            .font(.title3)
-                    }
-                    .buttonStyle(.bordered)
-                    .buttonBorderShape(.circle)
-                    .tint(.red)
-                    .padding(.bottom, 50)
+                    TimerButton(action: stopTimer, stage: .stop)
                 } else {
-                    Button {
-                        totalFocusTime -= 1
-                        timer = Timer.publish(every: 1, on: .main, in: .common)
-                        cancellable = timer.connect()
-                        isTimerRunning = true
-                    } label: {
-                        Text("Start")
-                            .frame(width: 50, height: 50)
-                            .font(.title3)
-                    }
-                    .buttonStyle(.bordered)
-                    .buttonBorderShape(.circle)
-                    .tint(.green)
-                    .padding(.bottom, 50)
+                    TimerButton(action: startTimer, stage: .start)
                 }
             }
             .navigationTitle("Study")
@@ -114,6 +90,18 @@ struct StudyView: View {
         }
         .scrollBounceBehavior(.basedOnSize)
     }
+    
+    private func stopTimer() {
+        cancellable?.cancel()
+        isTimerRunning = false
+    }
+    
+    private func startTimer() {
+        isTimerRunning = true
+        timer = Timer.publish(every: 1, on: .main, in: .common)
+        cancellable = timer.connect()
+        totalFocusTime -= 1 // Starting timer feels slow without this
+    }
 }
 
 #Preview {
@@ -121,4 +109,27 @@ struct StudyView: View {
         .modelContainer(for: Task.self, inMemory: true)
         .modelContainer(for: Session.self, inMemory: true)
         .preferredColorScheme(.dark)
+}
+
+struct TimerButton: View {
+    enum TimerButtonStage {
+        case start, stop
+    }
+    
+    var action: () -> Void
+    var stage: TimerButtonStage
+    
+    var body: some View {
+        Button {
+            action()
+        } label: {
+            Text(stage == .start ? "Start" : "Stop")
+                .frame(width: 50, height: 50)
+                .font(.title3)
+        }
+        .buttonStyle(.bordered)
+        .buttonBorderShape(.circle)
+        .tint(stage == .start ? .green : .red)
+        .padding(.bottom, 50)
+    }
 }
