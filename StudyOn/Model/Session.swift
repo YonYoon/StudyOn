@@ -8,13 +8,26 @@
 import Foundation
 import SwiftData
 
+protocol Session {
+    var duration: Int { get }
+}
+
 @Model
-final class Session {
-    var duration: DateInterval
-    var completedTasks: [Task]
+final class StudySession: Session {
+    var duration: Int
+    var completedTask: Task?
     
-    init(duration: DateInterval, completedTasks: [Task]) {
+    init(duration: Int, completedTask: Task?) {
         self.duration = duration
-        self.completedTasks = completedTasks
+        self.completedTask = completedTask
+    }
+}
+
+@Model
+final class BreakSession: Session {
+    var duration: Int
+    
+    init(duration: Int) {
+        self.duration = duration
     }
 }
