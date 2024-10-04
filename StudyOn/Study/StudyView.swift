@@ -42,7 +42,9 @@ struct StudyView: View {
                 
                 Form {
                     if stage == .focus {
-                        TimerPicker(hours: $focusHour, minutes: $focusMinute, seconds: $focusSecond)
+                        Section("Timer") {
+                            TimerPicker(hours: $focusHour, minutes: $focusMinute, seconds: $focusSecond)
+                        }
                         
                         Section("Task") {
                             Picker("Choose a task", selection: $selectedTask) {
