@@ -25,8 +25,10 @@ struct SessionView: View {
                             totalFocusTime -= 1
                         } else {
                             cancellable?.cancel()
-                            // TODO: Set to user defined total focus time
-                            totalFocusTime = 25 * 60 // 25 minutes
+                            isTimerRunning = false
+                            dismiss()
+                            // TODO: Play sound
+                            // TODO: Continue session with extra time
                         }
                     })
                     .font(.system(size: 75, weight: .bold, design: .monospaced))
