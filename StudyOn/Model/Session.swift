@@ -8,26 +8,20 @@
 import Foundation
 import SwiftData
 
-protocol Session {
-    var duration: Int { get }
-}
-
 @Model
-final class StudySession: Session {
+final class Session {
     var duration: Int
     var completedTask: Task?
+    var type: Stage
     
-    init(duration: Int, completedTask: Task?) {
+    init(duration: Int, completedTask: Task?, type: Stage) {
         self.duration = duration
         self.completedTask = completedTask
+        self.type = type
     }
 }
 
-@Model
-final class BreakSession: Session {
-    var duration: Int
-    
-    init(duration: Int) {
-        self.duration = duration
-    }
+enum Stage: String, Hashable, Codable {
+    case focus = "Focus"
+    case rest = "Rest"
 }

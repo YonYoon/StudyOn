@@ -10,11 +10,6 @@ import SwiftData
 import SwiftUI
 
 struct StudyView: View {
-    enum Stage: String, Hashable {
-        case focus = "Focus"
-        case rest = "Rest"
-    }
-    
     @Query(filter: #Predicate<Task> { !$0.isCompleted }) private var tasks: [Task]
     // TODO: Make timers persistent
     @State private var focusHour: Int = 0
