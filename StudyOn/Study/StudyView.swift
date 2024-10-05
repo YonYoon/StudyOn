@@ -60,7 +60,7 @@ struct StudyView: View {
                     isSessionStarted = true
                 }
                 .buttonBorderShape(.capsule)
-                .buttonStyle(.bordered)
+                .buttonStyle(.borderedProminent)
                 .padding(.bottom, 30)
                 .font(.title2)
                 .fullScreenCover(isPresented: $isSessionStarted) {
