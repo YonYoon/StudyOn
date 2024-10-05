@@ -90,7 +90,14 @@ struct SessionView: View {
     private func endSession() {
         cancellable?.cancel()
         isTimerRunning = false
-        modelContext.insert(Session(duration: Int(totalFocusTime - remainingFocusTime - 1), completedTask: task, type: type))
+        modelContext.insert(
+            Session(
+                duration: Int(totalFocusTime - remainingFocusTime - 1),
+                completedTask: task,
+                type: type,
+                createdAt: .now.addingTimeInterval(-(totalFocusTime - remainingFocusTime - 1))
+            )
+        )
         task = nil
         dismiss()
     }

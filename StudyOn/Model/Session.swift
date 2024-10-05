@@ -13,11 +13,13 @@ final class Session {
     var duration: Int
     var completedTask: Task?
     var type: Stage
+    var createdAt: Date
     
-    init(duration: Int, completedTask: Task?, type: Stage) {
+    init(duration: Int, completedTask: Task?, type: Stage, createdAt: Date) {
         self.duration = duration
         self.completedTask = completedTask
         self.type = type
+        self.createdAt = createdAt
     }
 }
 
