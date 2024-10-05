@@ -15,30 +15,33 @@ struct SessionView: View {
     @State private var cancellable: Cancellable? = nil
     @State private var isTimerRunning = false
     
+    @Binding var task: Task?
+    
     var body: some View {
         VStack {
-            HStack(alignment: .center) {
-                Spacer()
-                Text(DateComponentsFormatter().string(from: totalFocusTime) ?? "Error")
-                    .onReceive(timer, perform: { _ in
-                        if totalFocusTime > 0 {
-                            totalFocusTime -= 1
-                        } else {
-                            cancellable?.cancel()
-                            isTimerRunning = false
-                            dismiss()
-                            // TODO: Play sound
-                            // TODO: Continue session with extra time
-                        }
-                    })
-                    .font(.system(size: 75, weight: .bold, design: .monospaced))
-                Spacer()
+            Text(DateComponentsFormatter().string(from: totalFocusTime) ?? "Error")
+                .onReceive(timer, perform: { _ in
+                    if totalFocusTime > 0 {
+                        totalFocusTime -= 1
+                    } else {
+                        endSession()
+                        // TODO: Play sound
+                        // TODO: Continue session with extra time
+                    }
+                })
+                .font(.system(size: 75, weight: .bold, design: .monospaced))
+            
+            if let task {
+                TaskListCellView(task: task) { task in
+                    task.isCompleted.toggle()
+                }
+                .padding(.top)
+                .padding(.bottom, 50)
             }
             
             HStack(spacing: 75) {
                 Button {
-                    isTimerRunning = false
-                    dismiss()
+                    endSession()
                     // TODO: Save session in memory
                 } label: {
                     Image(systemName: "xmark")
@@ -74,11 +77,28 @@ struct SessionView: View {
         cancellable = timer.connect()
         totalFocusTime -= 1 // Starting timer feels slow without this
     }
+    
+    private func endSession() {
+        cancellable?.cancel()
+        isTimerRunning = false
+        dismiss()
+        task = nil
+    }
 }
 
 #Preview {
-    SessionView(totalFocusTime: 25*60)
-        .preferredColorScheme(.dark)
+    SessionView(
+        totalFocusTime: 25*60,
+        task: .constant(
+            Task(
+                title: "Solve 5 problems",
+                notes: "Do not ask for help and do not look at the solution",
+                date: nil,
+                isCompleted: false
+            )
+        )
+    )
+    .preferredColorScheme(.dark)
 }
 
 struct TimerButton: View {
@@ -101,6 +121,5 @@ struct TimerButton: View {
         .buttonStyle(.bordered)
         .buttonBorderShape(.circle)
         .tint(stage == .start ? .green : .red)
-//        .padding(.bottom, 50)
     }
 }
