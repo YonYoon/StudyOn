@@ -10,6 +10,7 @@ My [inspiration](https://youtu.be/TiuWk14VKZA?si=Y3mDtDRyu_dLdvbx)
 - [ ] !! Finish session by holding 'finish' button'
 - [ ] !! Add sounds to start/stop button
 - [ ] !! Export tasks from Apple Reminders
+- [ ] ! Implement notifications that reminds about tasks
 
 ### In future
 - [ ] Add gamification
