@@ -5,7 +5,7 @@ My [inspiration](https://youtu.be/TiuWk14VKZA?si=Y3mDtDRyu_dLdvbx)
 
 ## To-do
 - [x] !!! Add task view to session
-- [ ] !!! Save sessions in memory
+- [x] !!! Save sessions in memory
 - [ ] !!! Create view for list of sessions
 - [ ] !! Finish session by holding 'finish' button'
 - [ ] !! Add sounds to start/stop button
@@ -13,7 +13,6 @@ My [inspiration](https://youtu.be/TiuWk14VKZA?si=Y3mDtDRyu_dLdvbx)
 - [ ] ! Implement notifications that reminds about tasks
 - [ ] ! Change app's accent color to green
 - [x] Change buttons' styles
-- [x] Automatically start timer in session
 - [x] Automatically start timer in session
 
 ### In future
