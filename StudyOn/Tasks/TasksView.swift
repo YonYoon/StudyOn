@@ -45,7 +45,6 @@ struct TasksView: View {
         withAnimation {
             let newItem = Task()
             modelContext.insert(newItem)
-            try? modelContext.save()
         }
     }
 }

@@ -36,14 +36,12 @@ struct TaskListView: View {
     private func taskCompleted(_ task: Task) {
         guard let index = tasks.firstIndex(where: { $0.id == task.id }) else { return }
         tasks[index].isCompleted.toggle()
-        try? modelContext.save()
     }
     
     private func deleteItems(offsets: IndexSet) {
         withAnimation {
             for index in offsets {
                 modelContext.delete(tasks[index])
-                try? modelContext.save()
             }
         }
     }
