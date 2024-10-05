@@ -61,9 +61,13 @@ struct StudyView: View {
                     }
                 }
                 
-                Button("Start session") {
+                Button("Start") {
                     isSessionStarted = true
                 }
+                .buttonBorderShape(.capsule)
+                .buttonStyle(.bordered)
+                .padding(.bottom, 30)
+                .font(.title2)
                 .fullScreenCover(isPresented: $isSessionStarted) {
                     SessionView(totalFocusTime: calculateTotalSessionTime())
                 }
@@ -87,29 +91,6 @@ struct StudyView: View {
     StudyView()
         .modelContainer(for: Task.self, inMemory: true)
         .preferredColorScheme(.dark)
-}
-
-struct TimerButton: View {
-    enum TimerButtonStage {
-        case start, stop
-    }
-    
-    var action: () -> Void
-    var stage: TimerButtonStage
-    
-    var body: some View {
-        Button {
-            action()
-        } label: {
-            Text(stage == .start ? "Start" : "Stop")
-                .frame(width: 50, height: 50)
-                .font(.title3)
-        }
-        .buttonStyle(.bordered)
-        .buttonBorderShape(.circle)
-        .tint(stage == .start ? .green : .red)
-        .padding(.bottom, 50)
-    }
 }
 
 struct TimerPicker: View {

@@ -35,12 +35,20 @@ struct SessionView: View {
                 Spacer()
             }
             
-            HStack {
-                Button("Finish Session") {
+            HStack(spacing: 75) {
+                Button {
                     isTimerRunning = false
                     dismiss()
                     // TODO: Save session in memory
+                } label: {
+                    Image(systemName: "xmark")
+                        .imageScale(.large)
+                        .frame(width: 50, height: 50)
+                        .font(.title2)
                 }
+                .buttonBorderShape(.circle)
+                .buttonStyle(.bordered)
+                .tint(.orange)
                 
                 if isTimerRunning {
                     TimerButton(action: stopTimer, stage: .stop)
@@ -65,5 +73,30 @@ struct SessionView: View {
 }
 
 #Preview {
-    SessionView(totalFocusTime: 25)
+    SessionView(totalFocusTime: 25*60)
+        .preferredColorScheme(.dark)
+}
+
+struct TimerButton: View {
+    enum TimerButtonStage {
+        case start, stop
+    }
+    
+    var action: () -> Void
+    var stage: TimerButtonStage
+    
+    var body: some View {
+        Button {
+            action()
+        } label: {
+            Image(systemName: stage == .start ? "play.fill" : "stop.fill")
+                .imageScale(.large)
+                .frame(width: 50, height: 50)
+                .font(.title3)
+        }
+        .buttonStyle(.bordered)
+        .buttonBorderShape(.circle)
+        .tint(stage == .start ? .green : .red)
+//        .padding(.bottom, 50)
+    }
 }
