@@ -57,6 +57,10 @@ struct SessionView: View {
                 }
             }
         }
+        .onAppear {
+            totalFocusTime += 1 // For smoother appearance of timer
+            startTimer()
+        }
     }
     
     private func stopTimer() {

@@ -8,7 +8,7 @@ My [inspiration](https://youtu.be/TiuWk14VKZA?si=Y3mDtDRyu_dLdvbx)
 - [ ] Add sounds to start/stop button
 - [ ] Add task view to session
 - [x] Change buttons' styles
-- [ ] Automatically start timer in session
+- [x] Automatically start timer in session
 - [ ] Save sessions in memory
 - [ ] Create view for list of sessions
 - [ ] Add gamification
