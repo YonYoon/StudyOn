@@ -64,7 +64,7 @@ struct StudyView: View {
                 .padding(.bottom, 30)
                 .font(.title2)
                 .fullScreenCover(isPresented: $isSessionStarted) {
-                    SessionView(totalFocusTime: calculateTotalSessionTime(), task: $selectedTask)
+                    SessionView(focusTime: calculateTotalSessionTime(), task: $selectedTask, type: stage)
                 }
             }
             .navigationTitle("Study")

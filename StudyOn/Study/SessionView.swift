@@ -6,23 +6,34 @@
 //
 
 import Combine
+import SwiftData
 import SwiftUI
 
 struct SessionView: View {
+    @Environment(\.modelContext) var modelContext
     @Environment(\.dismiss) var dismiss
-    @State var totalFocusTime: TimeInterval
+    @State var remainingFocusTime: TimeInterval
+    let totalFocusTime: TimeInterval
     @State private var timer = Timer.publish(every: 1, on: .main, in: .common)
     @State private var cancellable: Cancellable? = nil
     @State private var isTimerRunning = false
+    let type: Stage
     
     @Binding var task: Task?
     
+    init(focusTime: TimeInterval, task: Binding<Task?>, type: Stage) {
+        self.remainingFocusTime = focusTime
+        self.totalFocusTime = focusTime
+        self._task = task
+        self.type = type
+    }
+    
     var body: some View {
         VStack {
-            Text(DateComponentsFormatter().string(from: totalFocusTime) ?? "Error")
+            Text(DateComponentsFormatter().string(from: remainingFocusTime) ?? "Error")
                 .onReceive(timer, perform: { _ in
-                    if totalFocusTime > 0 {
-                        totalFocusTime -= 1
+                    if remainingFocusTime > 0 {
+                        remainingFocusTime -= 1
                     } else {
                         endSession()
                         // TODO: Play sound
@@ -42,7 +53,6 @@ struct SessionView: View {
             HStack(spacing: 75) {
                 Button {
                     endSession()
-                    // TODO: Save session in memory
                 } label: {
                     Image(systemName: "xmark")
                         .imageScale(.large)
@@ -61,7 +71,6 @@ struct SessionView: View {
             }
         }
         .onAppear {
-            totalFocusTime += 1 // For smoother appearance of timer
             startTimer()
         }
     }
@@ -75,20 +84,21 @@ struct SessionView: View {
         isTimerRunning = true
         timer = Timer.publish(every: 1, on: .main, in: .common)
         cancellable = timer.connect()
-        totalFocusTime -= 1 // Starting timer feels slow without this
     }
     
+    // TODO: Save session in memory
     private func endSession() {
         cancellable?.cancel()
         isTimerRunning = false
-        dismiss()
+        modelContext.insert(Session(duration: Int(totalFocusTime - remainingFocusTime - 1), completedTask: task, type: type))
         task = nil
+        dismiss()
     }
 }
 
 #Preview {
     SessionView(
-        totalFocusTime: 25*60,
+        focusTime: 25*60,
         task: .constant(
             Task(
                 title: "Solve 5 problems",
@@ -96,7 +106,8 @@ struct SessionView: View {
                 date: nil,
                 isCompleted: false
             )
-        )
+        ),
+        type: .focus
     )
     .preferredColorScheme(.dark)
 }
