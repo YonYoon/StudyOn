@@ -34,6 +34,10 @@ struct StudyOnApp: App {
                 Tab("Study", systemImage: "timer") {
                     StudyView()
                 }
+                
+                Tab("Analytics", systemImage: "chart.bar.xaxis") {
+                    AnalyticsView()
+                }
             }
             .preferredColorScheme(.dark)
         }
