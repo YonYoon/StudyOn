@@ -18,6 +18,11 @@ struct TasksView: View {
             TaskListView(hideCompleted: hideCompleted)
             .navigationTitle("Tasks")
             .listStyle(.plain)
+            .overlay {
+                if tasks.isEmpty {
+                    ContentUnavailableView("No Tasks", systemImage: "tray")
+                }
+            }
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     EditButton()
