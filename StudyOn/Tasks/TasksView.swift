@@ -12,6 +12,7 @@ struct TasksView: View {
     @Environment(\.modelContext) private var modelContext
     @State private var hideCompleted: Bool = true
     @Query private var tasks: [Task]
+    @Query(filter: #Predicate<Task> { !$0.isCompleted }, animation: .default) private var tasksToDo: [Task]
 
     var body: some View {
         NavigationSplitView {
@@ -19,7 +20,7 @@ struct TasksView: View {
             .navigationTitle("Tasks")
             .listStyle(.plain)
             .overlay {
-                if tasks.isEmpty {
+                if tasks.isEmpty || hideCompleted && tasksToDo.isEmpty {
                     ContentUnavailableView("No Tasks", systemImage: "tray")
                 }
             }
