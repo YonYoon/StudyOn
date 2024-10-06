@@ -40,6 +40,7 @@ struct StudyOnApp: App {
                 }
             }
             .preferredColorScheme(.dark)
+            .tint(.green)
         }
         .modelContainer(sharedModelContainer)
     }
