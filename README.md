@@ -6,7 +6,7 @@ My [inspiration](https://youtu.be/TiuWk14VKZA?si=Y3mDtDRyu_dLdvbx)
 ## To-do
 - [x] !!! Add task view to session
 - [x] !!! Save sessions in memory
-- [ ] !!! Create view for list of sessions
+- [x] !!! Create view for list of sessions
 - [ ] !! Finish session by holding 'finish' button'
 - [ ] !! Add sounds to start/stop button
 - [ ] !! Export tasks from Apple Reminders
