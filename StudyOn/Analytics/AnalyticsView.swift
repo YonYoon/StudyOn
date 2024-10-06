@@ -9,6 +9,7 @@ import SwiftData
 import SwiftUI
 
 struct AnalyticsView: View {
+    @Environment(\.modelContext) var modelContext
     @Query private var sessions: [Session]
     
     var body: some View {
@@ -19,14 +20,32 @@ struct AnalyticsView: View {
                 } else {
                     Form {
                         Section("Sessions") {
-                            List(sessions) { session in
-                                Text(session.createdAt.formatted(.dateTime.minute().hour().day().weekday().month()))
+                            List {
+                                ForEach(sessions) { session in
+                                    Text(session.createdAt.formatted(.dateTime.minute().hour().day().weekday().month()))
+                                }
+                                .onDelete(perform: deleteItems)
                             }
                         }
                     }
                 }
             }
             .navigationTitle("Analytics")
+            .toolbar {
+                if !sessions.isEmpty {
+                    ToolbarItem(placement: .topBarTrailing) {
+                        EditButton()
+                    }
+                }
+            }
+        }
+    }
+    
+    private func deleteItems(offsets: IndexSet) {
+        withAnimation {
+            for index in offsets {
+                modelContext.delete(sessions[index])
+            }
         }
     }
 }
