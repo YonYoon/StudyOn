@@ -22,7 +22,7 @@ struct AnalyticsView: View {
                         Section("Sessions") {
                             List {
                                 ForEach(sessions) { session in
-                                    Text(session.createdAt.formatted(.dateTime.minute().hour().day().weekday().month()))
+                                    SessionListCellView(session: session)
                                 }
                                 .onDelete(perform: deleteItems)
                             }
@@ -51,7 +51,20 @@ struct AnalyticsView: View {
 }
 
 #Preview {
-    AnalyticsView()
+    let config = ModelConfiguration(isStoredInMemoryOnly: true)
+    let container = try! ModelContainer(for: Session.self, configurations: config)
+    
+
+    let session = Session(
+        duration: 1500,
+        completedTask: Task(title: "Practice SwiftUI", notes: "Make an app", date: .now, isCompleted: true),
+        type: .focus,
+        createdAt: .now
+    )
+    container.mainContext.insert(session)
+    
+    return AnalyticsView()
         .preferredColorScheme(.dark)
-        .modelContainer(for: Session.self, inMemory: true)
+        .modelContainer(container)
+//        .modelContainer(for: Session.self, inMemory: true)
 }
