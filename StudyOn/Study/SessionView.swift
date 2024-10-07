@@ -48,11 +48,13 @@ struct SessionView: View {
                     }
                 })
                 .onChange(of: scenePhase) {
-                    if scenePhase == .active {
-                        let timePassed = Date.now.timeIntervalSince(lastMomentTimerFired!)
-                        remainingFocusTime -= timePassed
-                    } else if scenePhase == .background {
-                        lastMomentTimerFired = .now
+                    if isTimerRunning {
+                        if scenePhase == .active {
+                            let timePassed = Date.now.timeIntervalSince(lastMomentTimerFired!)
+                            remainingFocusTime -= timePassed
+                        } else if scenePhase == .background {
+                            lastMomentTimerFired = .now
+                        }
                     }
                 }
             
