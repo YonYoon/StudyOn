@@ -10,7 +10,7 @@ import SwiftUI
 
 struct AnalyticsView: View {
     @Environment(\.modelContext) var modelContext
-    @Query private var sessions: [Session]
+    @Query(sort: \Session.createdAt, order: .reverse) private var sessions: [Session]
     
     var body: some View {
         NavigationStack {
