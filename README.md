@@ -12,6 +12,7 @@ My [inspiration](https://youtu.be/TiuWk14VKZA?si=Y3mDtDRyu_dLdvbx)
 - [ ] !! Widgets with streaks, commit history, list of tasks, list of sessions, timer (start timer, current timer)
 - [ ] !! Implement Timer Live Activity
 - [ ] !! Freerun mode (start session without timer)
+- [ ] ! Study[On/Off] switch screen with motivational quotes
 - [ ] ! Finish session by holding 'finish' button'
 - [ ] ! Add sounds to start/stop button
 - [ ] ! Export tasks from Apple Reminders
