@@ -4,7 +4,6 @@ StudyOn is an iOS app with to-do list and pomodoro timer.
 My [inspiration](https://youtu.be/TiuWk14VKZA?si=Y3mDtDRyu_dLdvbx)
 
 ## To-do
-- [ ] !!! Run timer in the background
 - [ ] !!! Add 'finishedAt' property to Session class
 - [ ] !! Add detail view in 'Analytics'
 - [ ] !! Add alarm sound and vibrations when timer goes off
@@ -19,6 +18,7 @@ My [inspiration](https://youtu.be/TiuWk14VKZA?si=Y3mDtDRyu_dLdvbx)
 - [ ] ! Implement notifications that reminds about tasks
 - [ ] ! Add progress circle around timer (Apple's 'Clock' as inspiration)
 - [ ] ! Move task view in session to bottom (Apple's 'Clock' as inspiration)
+- [x] !!! Run timer in the background
 - [x] !!! Implement editing of list in 'Analytics'
 - [x] !!! Add details to list cell in 'Analytics'
 - [x] !!! Add task view to session

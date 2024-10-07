@@ -11,15 +11,21 @@ import SwiftUI
 
 struct SessionView: View {
     @Environment(\.modelContext) var modelContext
+    
     @Environment(\.dismiss) var dismiss
+    
+    @Environment(\.scenePhase) var scenePhase
+    
     @State var remainingFocusTime: TimeInterval
     let totalFocusTime: TimeInterval
+    @SceneStorage("SessionView.lastMomentTimerFired") private var lastMomentTimerFired: Date?
+    
     @State private var timer = Timer.publish(every: 1, on: .main, in: .common)
     @State private var cancellable: Cancellable? = nil
     @State private var isTimerRunning = false
-    let type: Stage
     
     @Binding var task: Task?
+    let type: Stage
     
     init(focusTime: TimeInterval, task: Binding<Task?>, type: Stage) {
         self.remainingFocusTime = focusTime
@@ -31,6 +37,7 @@ struct SessionView: View {
     var body: some View {
         VStack {
             Text(DateComponentsFormatter().string(from: remainingFocusTime) ?? "Error")
+                .font(.system(size: 75, weight: .bold, design: .monospaced))
                 .onReceive(timer, perform: { _ in
                     if remainingFocusTime > 0 {
                         remainingFocusTime -= 1
@@ -40,7 +47,14 @@ struct SessionView: View {
                         // TODO: Continue session with extra time
                     }
                 })
-                .font(.system(size: 75, weight: .bold, design: .monospaced))
+                .onChange(of: scenePhase) {
+                    if scenePhase == .active {
+                        let timePassed = Date.now.timeIntervalSince(lastMomentTimerFired!)
+                        remainingFocusTime -= timePassed
+                    } else if scenePhase == .background {
+                        lastMomentTimerFired = .now
+                    }
+                }
             
             if let task {
                 TaskListCellView(task: task) { task in
@@ -86,10 +100,8 @@ struct SessionView: View {
         cancellable = timer.connect()
     }
     
-    // TODO: Save session in memory
     private func endSession() {
-        cancellable?.cancel()
-        isTimerRunning = false
+        stopTimer()
         modelContext.insert(
             Session(
                 duration: Int(totalFocusTime - remainingFocusTime - 1),
