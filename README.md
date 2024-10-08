@@ -6,6 +6,7 @@ My [inspiration](https://youtu.be/TiuWk14VKZA?si=Y3mDtDRyu_dLdvbx)
 ## To-do
 - [ ] !!! Add 'finishedAt' property to Session class
 - [ ] !!! Display on SessionListCellView if task completed or not
+- [ ] !! Divide session list by sections of days
 - [ ] !! Add detail view in 'Analytics'
 - [ ] !! Add alarm sound and vibrations when timer goes off
 - [ ] !! Add filters and sorting in 'Analytics'
