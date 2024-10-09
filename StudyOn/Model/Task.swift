@@ -10,12 +10,13 @@ import SwiftData
 
 @Model
 final class Task {
-    var title: String
-    var notes: String
-    var date: Date?
-    var isCompleted: Bool
+    var title: String = "New Task"
+    var notes: String = ""
+    var date: Date? = nil
+    var isCompleted: Bool = false
+    var session: Session? = nil
     
-    init(title: String = "New Task", notes: String = "", date: Date? = nil, isCompleted: Bool = false) {
+    init(title: String, notes: String, date: Date?, isCompleted: Bool) {
         self.title = title
         self.notes = notes
         self.date = date

@@ -49,7 +49,7 @@ struct TasksView: View {
 
     private func addItem() {
         withAnimation {
-            let newItem = Task()
+            let newItem = Task(title: "New Task", notes: "", date: nil, isCompleted: false)
             modelContext.insert(newItem)
         }
     }

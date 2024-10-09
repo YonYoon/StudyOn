@@ -19,5 +19,5 @@ struct TaskDetailView: View {
 }
 
 #Preview {
-    TaskDetailView(task: Task())
+    TaskDetailView(task: Task(title: "New Task", notes: "", date: nil, isCompleted: false))
 }
