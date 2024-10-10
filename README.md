@@ -1,7 +1,7 @@
 #  About
 StudyOn is an iOS app with to-do list and pomodoro timer.
 
-My [inspiration](https://youtu.be/TiuWk14VKZA?si=Y3mDtDRyu_dLdvbx)
+[App Store](https://apps.apple.com/kz/app/studyon/id6736627832)
 
 ## To-do
 - [ ] !!! Add 'finishedAt' property to Session class
@@ -34,3 +34,5 @@ My [inspiration](https://youtu.be/TiuWk14VKZA?si=Y3mDtDRyu_dLdvbx)
 ### In future
 - [ ] Add gamification
 - [ ] Implement online functions (friends, ranking, competing)
+- [ ] Add support for iPad and macOS
+- [ ] Implement accesibility features
