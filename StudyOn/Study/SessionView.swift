@@ -18,7 +18,7 @@ struct SessionView: View {
     
     @State var remainingFocusTime: TimeInterval
     let totalFocusTime: TimeInterval
-    @SceneStorage("SessionView.lastMomentTimerFired") private var lastMomentTimerFired: Date?
+    @State private var lastMomentTimerFired: Date?
     
     @State private var timer = Timer.publish(every: 1, on: .main, in: .common)
     @State private var cancellable: Cancellable? = nil
@@ -54,6 +54,7 @@ struct SessionView: View {
                             remainingFocusTime -= timePassed
                         } else if scenePhase == .background {
                             lastMomentTimerFired = .now
+                            saveLastMomentTimerFired(date: .now)
                         }
                     }
                 }
@@ -88,6 +89,7 @@ struct SessionView: View {
         }
         .onAppear {
             startTimer()
+            lastMomentTimerFired = loadLastMomentTimerFired()
         }
     }
     
@@ -114,6 +116,14 @@ struct SessionView: View {
         )
         task = nil
         dismiss()
+    }
+    
+    private func saveLastMomentTimerFired(date: Date) {
+        UserDefaults.standard.set(date, forKey: "SessionView.lastMomentTimerFired")
+    }
+    
+    private func loadLastMomentTimerFired() -> Date? {
+        return UserDefaults.standard.object(forKey: "SessionView.lastMomentTimerFired") as? Date
     }
 }
 
