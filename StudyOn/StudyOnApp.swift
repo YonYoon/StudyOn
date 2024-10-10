@@ -26,21 +26,42 @@ struct StudyOnApp: App {
 
     var body: some Scene {
         WindowGroup {
-            TabView {
-                Tab("Tasks", systemImage: "list.bullet.circle.fill") {
+            if #available(iOS 18.0, *) {
+                TabView {
+                    Tab("Tasks", systemImage: "list.bullet.circle.fill") {
+                        TasksView()
+                    }
+                    
+                    Tab("Study", systemImage: "timer") {
+                        StudyView()
+                    }
+                    
+                    Tab("Analytics", systemImage: "chart.bar.xaxis") {
+                        AnalyticsView()
+                    }
+                }
+                .preferredColorScheme(.dark)
+                .tint(.green)
+            } else {
+                TabView {
                     TasksView()
-                }
-                
-                Tab("Study", systemImage: "timer") {
+                        .tabItem {
+                            Label("Tasks", systemImage: "list.bullet.circle.fill")
+                        }
+                    
                     StudyView()
-                }
-                
-                Tab("Analytics", systemImage: "chart.bar.xaxis") {
+                        .tabItem {
+                            Label("Study", systemImage: "timer")
+                        }
+                    
                     AnalyticsView()
+                        .tabItem {
+                            Label("Analytics", systemImage: "chart.bar.xaxis")
+                        }
                 }
+                .preferredColorScheme(.dark)
+                .tint(.green)
             }
-            .preferredColorScheme(.dark)
-            .tint(.green)
         }
         .modelContainer(sharedModelContainer)
     }
