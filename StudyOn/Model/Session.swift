@@ -10,12 +10,12 @@ import SwiftData
 
 @Model
 final class Session {
-    var duration: Int = 0
+    var duration: TimeInterval = 0
     @Relationship(inverse: \Task.session) var completedTask: Task? = nil
     var type: Stage = Stage.focus
     var createdAt: Date = Date()
     
-    init(duration: Int, completedTask: Task?, type: Stage, createdAt: Date) {
+    init(duration: TimeInterval, completedTask: Task?, type: Stage, createdAt: Date) {
         self.duration = duration
         self.completedTask = completedTask
         self.type = type

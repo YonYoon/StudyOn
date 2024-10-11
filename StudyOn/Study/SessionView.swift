@@ -108,10 +108,10 @@ struct SessionView: View {
         stopTimer()
         modelContext.insert(
             Session(
-                duration: Int(totalFocusTime - remainingFocusTime - 1),
+                duration: totalFocusTime - remainingFocusTime,
                 completedTask: task,
                 type: type,
-                createdAt: .now.addingTimeInterval(-(totalFocusTime - remainingFocusTime - 1))
+                createdAt: .now.addingTimeInterval(-(totalFocusTime - remainingFocusTime))
             )
         )
         task = nil
