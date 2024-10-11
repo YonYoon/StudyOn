@@ -14,6 +14,9 @@ StudyOn is an iOS app with to-do list and pomodoro timer.
 - [ ] !! Widgets with streaks, commit history, list of tasks, list of sessions, timer (start timer, current timer)
 - [ ] !! Implement Timer Live Activity
 - [ ] !! Freerun mode (start session without timer)
+- [ ] ! Sort tasks by date
+- [ ] ! Add priority to tasks
+- [ ] ! Save the choice of hidden/showed completed task in UserDefaults
 - [ ] ! Study[On/Off] switch screen with motivational quotes
 - [ ] ! Finish session by holding 'finish' button'
 - [ ] ! Add sounds to start/stop button
