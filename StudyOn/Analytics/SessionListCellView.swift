@@ -15,10 +15,30 @@ struct SessionListCellView: View {
             Text(session.type == .focus ? "Focus" : "Break")
                 .font(.caption)
                 .foregroundStyle(session.type == .focus ? .green : .red)
-            Text(session.completedTask?.title ?? "No Task")
+            HStack() {
+                Text(session.completedTask?.title ?? "No Task")
+                    .lineLimit(1)
+                Spacer()
+                Text(formatSessionDuration(session.duration))
+                    .font(.callout)
+                    .fontWeight(.medium)
+                    .foregroundStyle(.secondary)
+            }
             Text("\(session.createdAt.formatted(.dateTime.minute().hour())) - \(session.createdAt.addingTimeInterval(TimeInterval(session.duration)).formatted(.dateTime.minute().hour())), \(session.createdAt.formatted(.dateTime.day().weekday().month()))")
                 .font(.footnote)
                 .foregroundStyle(.secondary)
+        }
+    }
+    
+    private func formatSessionDuration(_ duration: TimeInterval) -> String {
+        if duration >= 3600 {
+            let hours: Int = Int(duration / 3600)
+            return "\(hours) hours"
+        } else if duration >= 60 {
+            let minutes: Int = Int(duration / 60)
+            return "\(minutes) min"
+        } else {
+            return "\(Int(duration)) sec"
         }
     }
 }
