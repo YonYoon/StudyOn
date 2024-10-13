@@ -47,7 +47,7 @@ struct SessionListCellView: View {
     SessionListCellView(session:
                             Session(
                                 duration: 1500,
-                                completedTask: Task(title: "Practice SwiftUI", notes: "Make an app", date: .now, isCompleted: true),
+                                completedTask: Task(title: "Practice SwiftUI", notes: "Make an app", isCompleted: true),
                                 type: .focus,
                                 createdAt: .now
                             )

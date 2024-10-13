@@ -134,7 +134,6 @@ struct SessionView: View {
             Task(
                 title: "Solve 5 problems",
                 notes: "Do not ask for help and do not look at the solution",
-                date: nil,
                 isCompleted: false
             )
         ),

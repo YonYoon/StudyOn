@@ -38,7 +38,7 @@ struct TaskListCellView: View {
 }
 
 #Preview {
-    TaskListCellView(task: Task(title: "New Task", notes: "", date: nil, isCompleted: false)) { task in
+    TaskListCellView(task: Task(title: "New Task", notes: "", isCompleted: false)) { task in
         task.isCompleted.toggle()
     }
 }

@@ -14,9 +14,9 @@ struct TaskListView: View {
     
     init(hideCompleted: Bool) {
         if hideCompleted {
-            _tasks = Query(filter: #Predicate<Task> { !$0.isCompleted }, animation: .default)
+            _tasks = Query(filter: #Predicate<Task> { !$0.isCompleted }, sort: \Task.createdAt, order: .reverse, animation: .default)
         } else {
-            _tasks = Query()
+            _tasks = Query(sort: \Task.createdAt, order: .reverse)
         }
     }
     

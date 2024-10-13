@@ -12,14 +12,13 @@ import SwiftData
 final class Task {
     var title: String = "New Task"
     var notes: String = ""
-    var date: Date? = nil
+    var createdAt: Date = Date()
     var isCompleted: Bool = false
     var session: Session? = nil
     
-    init(title: String, notes: String, date: Date?, isCompleted: Bool) {
+    init(title: String, notes: String, isCompleted: Bool) {
         self.title = title
         self.notes = notes
-        self.date = date
         self.isCompleted = isCompleted
     }
 }
