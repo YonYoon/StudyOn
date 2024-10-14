@@ -33,11 +33,13 @@ struct TasksView: View {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     EditButton()
                 }
+                
                 ToolbarItem {
                     Button(action: addItem) {
                         Label("Add Task", systemImage: "plus")
                     }
                 }
+                
                 ToolbarItem(placement: .automatic) {
                     Menu("Options", systemImage: "ellipsis.circle") {
                         Button(hideCompleted ? "Show Completed" : "Hide Completed", systemImage: hideCompleted ? "eye" : "eye.slash") {
