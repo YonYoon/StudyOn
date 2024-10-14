@@ -14,7 +14,8 @@ final class Task {
     var notes: String = ""
     var createdAt: Date = Date()
     var isCompleted: Bool = false
-    var session: Session? = nil
+    var session: Session?
+    var category: TaskCategory?
     
     init(title: String, notes: String, isCompleted: Bool) {
         self.title = title

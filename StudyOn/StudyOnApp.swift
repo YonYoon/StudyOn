@@ -13,7 +13,8 @@ struct StudyOnApp: App {
     var sharedModelContainer: ModelContainer = {
         let schema = Schema([
             Task.self,
-            Session.self,
+            TaskCategory.self,
+            Session.self
         ])
         let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
 
