@@ -13,9 +13,11 @@ struct TasksView: View {
     @State private var hideCompleted: Bool = true
     @Query private var tasks: [Task]
     @Query(filter: #Predicate<Task> { !$0.isCompleted }, animation: .default) private var tasksToDo: [Task]
+    
+    @State private var isDetailViewPresented = false
 
     var body: some View {
-        NavigationSplitView {
+        NavigationStack {
             TaskListView(hideCompleted: hideCompleted)
             .navigationTitle("Tasks")
             .listStyle(.plain)
@@ -24,6 +26,9 @@ struct TasksView: View {
                     ContentUnavailableView("No Tasks", systemImage: "tray")
                 }
             }
+            .sheet(isPresented: $isDetailViewPresented, content: {
+                CreateTaskDetailView()
+            })
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     EditButton()
@@ -42,15 +47,12 @@ struct TasksView: View {
 
                 }
             }
-        } detail: {
-            Text("Select an item")
         }
     }
 
     private func addItem() {
         withAnimation {
-            let newItem = Task(title: "New Task", notes: "", isCompleted: false)
-            modelContext.insert(newItem)
+            isDetailViewPresented = true
         }
     }
 }

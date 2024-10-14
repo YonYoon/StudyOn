@@ -34,5 +34,5 @@ struct EditDetailView: View {
 }
 
 #Preview {
-    EditTaskDetailView(task: Task(title: "Title", notes: "Notes", isCompleted: false))
+    EditDetailView(task: Task(title: "Title", notes: "Notes", isCompleted: false))
 }

@@ -24,7 +24,7 @@ struct TaskListView: View {
         List {
             ForEach(tasks) { task in
                 NavigationLink {
-                    TaskDetailView(task: task)
+                    EditDetailView(task: task)
                 } label: {
                     TaskListCellView(task: task, action: taskCompleted)
                 }
