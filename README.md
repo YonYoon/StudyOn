@@ -4,6 +4,13 @@ StudyOn is an iOS app with to-do list and pomodoro timer.
 [App Store](https://apps.apple.com/kz/app/studyon/id6736627832)
 
 ## To-do
+- [ ] Categories for tasks
+- [ ] Change 'Timer' to 'Tracker'
+- [ ] In 'Tracker' user can choose category and a task for this category
+- [ ] In 'Analytics' change sessions to include category
+- [ ] Divide sessions in 'Analytics' by categories
+- [ ] Add graphs in 'Analytics' 
+- [ ] !!! Fix bug that when there is a chosen task it will be displayed in 'Rest' session
 - [ ] !!! Add 'finishedAt' property to Session class
 - [ ] !!! Display on SessionListCellView if task completed or not
 - [ ] !! Timer does not change it's value first time
@@ -14,6 +21,7 @@ StudyOn is an iOS app with to-do list and pomodoro timer.
 - [ ] !! Widgets with streaks, commit history, list of tasks, list of sessions, timer (start timer, current timer)
 - [ ] !! Implement Timer Live Activity
 - [ ] !! Freerun mode (start session without timer)
+- [ ] ! Total time focused this day/week/month/year/never (remind if there were no focus)
 - [ ] ! Sort tasks by date
 - [ ] ! Add priority to tasks
 - [ ] ! Save the choice of hidden/showed completed task in UserDefaults
